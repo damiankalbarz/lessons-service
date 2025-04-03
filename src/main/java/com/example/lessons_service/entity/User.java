@@ -5,7 +5,7 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.util.List;
-
+/*
 @Data
 @Entity
 public class User {
@@ -37,3 +37,4 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Opinion> opinions;
 }
+*/

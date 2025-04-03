@@ -22,7 +22,7 @@ class Lesson {
     @NotNull(message = "Subject cannot be null")
     @Enumerated(EnumType.STRING)
     private SchoolSubject subject;
-
+/*
     @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
     private User student;
@@ -30,5 +30,5 @@ class Lesson {
     @ManyToOne
     @JoinColumn(name = "teacher_id", nullable = false)
     private User teacher;
-
+*/
 }
