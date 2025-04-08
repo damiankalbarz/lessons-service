@@ -1,9 +1,3 @@
-springdoc:
-  api-docs:
-    path: /authentication-docs
-  swagger-ui:
-    path: /authentication-docs/swagger-ui-custom.html
-
 application:
   security:
     jwt:
