@@ -14,6 +14,7 @@ import java.util.List;
 
 @Data
 public class TeacherDTO {
+    private Long id;
     private String firstname;
     private String lastname;
     private String email;

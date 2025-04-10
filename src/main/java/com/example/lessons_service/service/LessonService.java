@@ -2,6 +2,7 @@ package com.example.lessons_service.service;
 
 import com.example.lessons_service.dto.LessonDto;
 import com.example.lessons_service.entity.Lesson;
+import com.example.lessons_service.entity.Teacher;
 import com.example.lessons_service.repository.LessonRepository;
 import com.example.lessons_service.auth.user.User;
 import com.example.lessons_service.auth.user.UserRepository;
@@ -33,7 +34,7 @@ public class LessonService {
         /*
         User student = userRepository.findById(dto.getStudentId())
                 .orElseThrow(() -> new RuntimeException("Student not found"));
-        User teacher = userRepository.findById(dto.getTeacherId())
+        Teacher teacher = userRepository.findById(dto.getTeacherId())
                 .orElseThrow(() -> new RuntimeException("Teacher not found"));
 
         lesson.setStudent(student);

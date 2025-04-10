@@ -49,7 +49,10 @@ public class SecurityConfiguration {
             "/api/v1/membership-pass/**",
             "/api/v1/auth/google-authenticate",
             "/chat/**",
-            "/api/v1/personal-trainers/**"
+            "/api/v1/personal-trainers/**",
+            "/api/teachers",
+            "/api/teachers/**"
+
     };
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;

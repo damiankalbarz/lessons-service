@@ -9,13 +9,13 @@ import lombok.Getter;
 
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
+
 @Data
 @Entity
-public class Teacher extends User {
+public class Teacher{
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
     @NotBlank(message = "First name must not be blank")
     @Size(min = 2, max = 30, message = "First name must be between 2 and 30 characters")
     private String firstname;
