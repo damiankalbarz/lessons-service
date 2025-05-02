@@ -30,6 +30,6 @@ public class Lesson {
 
     @ManyToOne
     @JoinColumn(name = "teacher_id", nullable = false)
-    private User teacher;
+    private Teacher teacher;
 
 }

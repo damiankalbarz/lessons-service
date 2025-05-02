@@ -6,6 +6,7 @@ import com.example.lessons_service.entity.Teacher;
 import com.example.lessons_service.repository.LessonRepository;
 import com.example.lessons_service.auth.user.User;
 import com.example.lessons_service.auth.user.UserRepository;
+import com.example.lessons_service.repository.TeacherRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class LessonService {
 
     private final LessonRepository lessonRepository;
     private final UserRepository userRepository;
-
+    private final TeacherRepository teacherRepository;
     public List<LessonDto> getAllLessons() {
         return lessonRepository.findAll().stream().map(this::mapToDto).collect(Collectors.toList());
     }
@@ -31,15 +32,17 @@ public class LessonService {
         lesson.setStartTime(dto.getStartTime());
         lesson.setEndTime(dto.getEndTime());
         lesson.setSubject(dto.getSubject());
-        /*
-        User student = userRepository.findById(dto.getStudentId())
+
+        User student = userRepository.findById((int) dto.getStudentId().longValue())
                 .orElseThrow(() -> new RuntimeException("Student not found"));
-        Teacher teacher = userRepository.findById(dto.getTeacherId())
+        lesson.setStudent(student);
+
+        Teacher teacher = teacherRepository.findById(dto.getTeacherId())
                 .orElseThrow(() -> new RuntimeException("Teacher not found"));
 
-        lesson.setStudent(student);
+
         lesson.setTeacher(teacher);
-        */
+
         Lesson saved = lessonRepository.save(lesson);
         return mapToDto(saved);
     }
@@ -52,15 +55,15 @@ public class LessonService {
         lesson.setStartTime(dto.getStartTime());
         lesson.setEndTime(dto.getEndTime());
         lesson.setSubject(dto.getSubject());
-        /*
-        User student = userRepository.findById(dto.getStudentId())
+        User student = userRepository.findById((int) dto.getStudentId().longValue())
                 .orElseThrow(() -> new RuntimeException("Student not found"));
-        User teacher = userRepository.findById(dto.getTeacherId())
+        lesson.setStudent(student);
+
+        Teacher teacher = teacherRepository.findById(dto.getTeacherId())
                 .orElseThrow(() -> new RuntimeException("Teacher not found"));
 
-        lesson.setStudent(student);
+
         lesson.setTeacher(teacher);
-        */
         return mapToDto(lessonRepository.save(lesson));
     }
 
@@ -74,8 +77,8 @@ public class LessonService {
         dto.setStartTime(lesson.getStartTime());
         dto.setEndTime(lesson.getEndTime());
         dto.setSubject(lesson.getSubject());
-        //dto.setStudentId(lesson.getStudent().getId());
-        //dto.setTeacherId(lesson.getTeacher().getId());
+        dto.setStudentId(Long.valueOf(lesson.getStudent().getId()));
+        dto.setTeacherId(lesson.getTeacher().getId());
         return dto;
     }
 }
