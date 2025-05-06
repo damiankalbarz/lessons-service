@@ -42,4 +42,9 @@ public class Teacher{
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Opinion> opinions;
+
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LessonPrice> lessonPrices;
+
+
 }
