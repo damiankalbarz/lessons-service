@@ -37,4 +37,5 @@ public class TeacherDTO {
     private Double rate;
 
     private List<Opinion> opinions;
+    private List<LessonPriceDTO> lessonPrice;
 }

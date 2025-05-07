@@ -1,5 +1,6 @@
 package com.example.lessons_service.service;
 
+import com.example.lessons_service.dto.LessonPriceDTO;
 import com.example.lessons_service.dto.TeacherDTO;
 import com.example.lessons_service.entity.Opinion;
 import com.example.lessons_service.entity.Teacher;
@@ -72,6 +73,19 @@ public class TeacherService {
         teacher.setRate(average);
 
         return mapToDTO(teacherRepository.save(teacher));
+    }
+
+    public List<LessonPriceDTO> getLessonPricesByTeacherId(Long teacherId) {
+        Teacher teacher = teacherRepository.findById(teacherId)
+                .orElseThrow(() -> new RuntimeException("Teacher not found with id: " + teacherId));
+
+        return teacher.getLessonPrices().stream()
+                .map(price -> new LessonPriceDTO(
+                        price.getSubject(),
+                        price.getDurationInMinutes(),
+                        price.getPrice()
+                ))
+                .collect(Collectors.toList());
     }
 
 

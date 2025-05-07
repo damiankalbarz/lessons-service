@@ -1,6 +1,7 @@
 package com.example.lessons_service.controller;
 
 import com.example.lessons_service.dto.AddOpinionRequest;
+import com.example.lessons_service.dto.LessonPriceDTO;
 import com.example.lessons_service.dto.TeacherDTO;
 import com.example.lessons_service.service.TeacherService;
 import jakarta.validation.Valid;
@@ -48,5 +49,10 @@ public class TeacherController {
             @PathVariable Long id,
             @RequestBody @Valid AddOpinionRequest request) {
         return ResponseEntity.ok(teacherService.addOpinion(id, request.getComment(), request.getRating()));
+    }
+
+    @GetMapping("/{teacherId}/lesson-prices")
+    public List<LessonPriceDTO> getLessonPrices(@PathVariable Long teacherId) {
+        return teacherService.getLessonPricesByTeacherId(teacherId);
     }
 }
