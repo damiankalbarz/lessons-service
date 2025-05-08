@@ -2,7 +2,9 @@ package com.example.lessons_service;
 
 import com.example.lessons_service.controller.TeacherController;
 import com.example.lessons_service.dto.AddOpinionRequest;
+import com.example.lessons_service.dto.LessonPriceDTO;
 import com.example.lessons_service.dto.TeacherDTO;
+import com.example.lessons_service.entity.SchoolSubject;
 import com.example.lessons_service.service.TeacherService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,12 +17,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.List;
 
 import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 public class TeacherControllerTest {
@@ -196,5 +204,27 @@ public class TeacherControllerTest {
         ).andReturn().getResponse();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void shouldReturnLessonPricesForTeacher() throws Exception {
+        // given
+        Long teacherId = 1L;
+        List<LessonPriceDTO> lessonPrices = List.of(
+                new LessonPriceDTO(SchoolSubject.MATHEMATICS, 30, 50.0),
+                new LessonPriceDTO(SchoolSubject.ENGLISH, 60, 90.0)
+        );
+
+        when(teacherService.getLessonPricesByTeacherId(teacherId)).thenReturn(lessonPrices);
+
+        mvc.perform(MockMvcRequestBuilders.get("/api/teachers/{teacherId}/lesson-prices", teacherId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].subject").value("MATHEMATICS"))
+                .andExpect(jsonPath("$[0].durationInMinutes").value(30))
+                .andExpect(jsonPath("$[0].price").value(50.0))
+                .andExpect(jsonPath("$[1].subject").value("ENGLISH"))
+                .andExpect(jsonPath("$[1].durationInMinutes").value(60))
+                .andExpect(jsonPath("$[1].price").value(90.0));
     }
 }
