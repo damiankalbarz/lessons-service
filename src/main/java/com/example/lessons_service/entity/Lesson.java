@@ -32,4 +32,6 @@ public class Lesson {
     @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
 
+    private boolean notificationSent = false;
+
 }
